@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>チャットサイト~Fish~</title>
+  <title>おさかなチャットV2.0</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #000; }
     body.dark-mode { background-color: #121212; color: #fff; }
@@ -11,18 +11,18 @@
     #messages { flex: 1; padding: 10px; overflow-y: scroll; border-bottom: 1px solid #ccc; background-color: #fff; }
     body.dark-mode #messages, body.gaming-mode #messages { background-color: #1e1e1e; }
     #messages li { list-style: none; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-    body.light-mode #messages li { background: #e9ecef; }
+    body.light-mode #messages li { background: #FCFCFC; }
     body.dark-mode #messages li, body.gaming-mode #messages li { background: #333; }
     #form { display: flex; border-top: 1px solid #ccc; background-color: #f8f9fa; padding: 10px; align-items: center; }
     body.dark-mode #form, body.gaming-mode #form { background-color: #222; }
     #input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
     body.dark-mode #input, body.gaming-mode #input { background-color: #444; border: 1px solid #666; color: #fff; }
-    #send { padding: 10px 20px; border: none; background: #28a745; color: white; border-radius: 5px; cursor: pointer; font-size: 1em; margin-left: 10px; }
-    body.dark-mode #send, body.gaming-mode #send { background: #1db954; }
+    #send { padding: 10px 20px; border: none; background: #63ceff; color: white; border-radius: 5px; cursor: pointer; font-size: 1em; margin-left: 10px; }
+    body.dark-mode #send, body.gaming-mode #send { background: #ffa27d; }
     #menu { position: absolute; top: 10px; right: 10px; }
-    #menu button { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #menu button { padding: 10px; background-color: #00ffae; color: white; border: none; border-radius: 5px; cursor: pointer; }
     body.dark-mode #menu button, body.gaming-mode #menu button { background-color: #1e88e5; }
-    #menu-content { display: none; position: absolute; right: 0; background-color: white; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; border-radius: 5px; border: 1px solid #ccc; z-index: 1000; }
+    #menu-content { display: none; position: absolute; right: 0; background-color: white; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; border-radius: 5px; border: 5px solid #cff; z-index: 1000; }
     body.dark-mode #menu-content, body.gaming-mode #menu-content { background-color: #333; border: 1px solid #666; }
     #menu-content h3 { margin-top: 0; }
     body.dark-mode #menu-content h3, body.gaming-mode #menu-content h3 { color: #fff; }
@@ -48,30 +48,17 @@
   <div id="menu">
     <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
     <div id="menu-content">
-      <h3>ユーザー設定</h3>
+      <h3>名前</h3>
       <label>
-        ニックネーム:
-        <input type="text" id="username-input" placeholder="ニックネームを入力" value="名無し">
+        名前は
+        <input type="text" id="username-input" placeholder="名前を入力" value="名無しマン">
       </label>
-      <h3>音の設定</h3>
+      <h3>モード切替:</h3>
       <label>
-        通知音:
-        <select id="sound-select">
-          <option value="sound1">音1</option>
-          <option value="sound2">音2</option>
-          <option value="sound3">音3</option>
-        </select>
-      </label>
-      <label>
-        音量:
-        <input type="range" id="volume-control" min="0" max="100" value="50">
-      </label>
-      <label>
-        モード切替:
+        モード:
         <select id="mode-select">
-          <option value="standard">標準</option>
-          <option value="light">ライトモード</option>
-          <option value="dark">ダークモード</option>
+          <option value="light">ライト</option>
+          <option value="dark">ダーク</option>
           <option value="gaming">ゲーミング</option>
         </select>
       </label>
@@ -81,8 +68,7 @@
   <div id="chat-container">
     <ul id="messages"></ul>
     <form id="form">
-      <input id="input" autocomplete="off" placeholder="メッセージを入力..." />
-      <input type="file" id="image-input" accept="image/*" style="margin-left: 10px;" />
+      <input id="input" autocomplete="off" placeholder="メッセージを入力" />
       <button id="send">送信</button>
     </form>
   </div>
@@ -95,12 +81,12 @@
   <script>
     // Firebase設定
     const firebaseConfig = {
-      apiKey: "AIzaSyDRWpms2GSY9in4l7GMsS5PfI8ps7VVnqE",
-      authDomain: "chatsite-fish.firebaseapp.com",
-      projectId: "chatsite-fish",
-      storageBucket: "chatsite-fish.firebasestorage.app",
-      messagingSenderId: "348338341455",
-      appId: "1:348338341455:web:7b84895491e7f902234c3a"
+      apiKey: "AIzaSyAXKgF9nGaUTNPQxKbuMMewhBcEnkGVZTE",
+      authDomain: "osakana-chat.firebaseapp.com",
+      projectId: "osakana-chat",
+      storageBucket: "osakana-chat.firebasestorage.app",
+      messagingSenderId: "802446516023",
+      appId: "1:802446516023:web:268f701761c66aa2d584b2"
     };
 
     // Firebaseを初期化
@@ -119,7 +105,7 @@
     }
 
     // ニックネーム
-    let username = localStorage.getItem('username') || '名無し';
+    let username = localStorage.getItem('username') || '名無しマン';
     const usernameInput = document.getElementById('username-input');
     usernameInput.value = username;
 
@@ -138,50 +124,20 @@
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
-    const imageInput = document.getElementById('image-input');
     const messages = document.getElementById('messages');
 
     // 送信時処理
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       const msg = input.value.trim();
-      const file = imageInput.files[0];
-      if (msg || file) {
-        if (file) {
-          const imageName = `${userId}_${Date.now()}_${file.name}`;
-          const imageRef = storageRef.child('images/' + imageName);
-          const uploadTask = imageRef.put(file);
-          
-          uploadTask.on('state_changed', 
-            function(snapshot) {
-              // プログレスなどを表示したい場合はここに追加
-            }, 
-            function(error) {
-              console.error('画像アップロードエラー:', error);
-            }, 
-            function() {
-              uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                messagesRef.push().set({
-                  text: msg,
-                  userId: userId,
-                  username: username,
-                  timestamp: Date.now(),
-                  imageUrl: downloadURL
-                });
-                input.value = '';
-                imageInput.value = '';
-              });
-            }
-          );
-        } else {
-          messagesRef.push().set({
-            text: msg,
-            userId: userId,
-            username: username,
-            timestamp: Date.now()
-          });
-          input.value = '';
-        }
+      if (msg) {
+        messagesRef.push().set({
+          text: msg,
+          userId: userId,
+          username: username,
+          timestamp: Date.now()
+        });
+        input.value = '';
       }
     });
 
@@ -191,9 +147,8 @@
       const msg = data.text;
       const timestamp = data.timestamp;
       const date = new Date(timestamp).toLocaleString();
-      const username = data.username || '名無し';
+      const username = data.username || '名無しマン';
       const userIdMsg = data.userId || '不明';
-      const imageUrl = data.imageUrl || null;
 
       const li = document.createElement('li');
       const dateDiv = document.createElement('div');
@@ -218,23 +173,11 @@
         li.innerHTML += `<br>${embedHTML}`;
       }
 
-      if (imageUrl) {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.className = 'chat-image';
-        li.appendChild(img);
-      }
-
       li.prepend(dateDiv);
       li.prepend(usernameSpan);
 
       messages.appendChild(li);
       messages.scrollTop = messages.scrollHeight;
-
-      // 通知音再生
-      if (data.userId !== userId && notificationSound.src) {
-        notificationSound.play();
-      }
     });
 
     // モード切替
@@ -251,43 +194,12 @@
       }
     });
 
-    // メニューの設定
-    const soundSelect = document.getElementById('sound-select');
-    const volumeControl = document.getElementById('volume-control');
-
-    // 通知音
-    let notificationSound = new Audio();
-    soundSelect.addEventListener('change', function() {
-      notificationSound.src = `sounds/${soundSelect.value}.mp3`;
-    });
-
-    volumeControl.addEventListener('input', function() {
-      notificationSound.volume = volumeControl.value / 100;
-    });
-
     // メニューの開閉
     const menuToggle = document.getElementById('menu-toggle');
     menuToggle.addEventListener('click', function() {
       const menuContent = document.getElementById('menu-content');
       menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
     });
-
-    // リンク処理
-    function handleLinks(event) {
-      const target = event.target;
-      if (target.tagName === 'A') {
-        const url = target.href;
-        if (url.startsWith('http://') || url.startsWith('https://')) {
-          event.preventDefault();
-          const confirmRedirect = confirm(`外部URL\n${url}\nに移動しますか？`);
-          if (confirmRedirect) {
-            window.open(url);
-          }
-        }
-      }
-    }
-
-    messages.addEventListener('click', handleLinks);
   </script>
 </body>
 </html>
