@@ -1,7 +1,10 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>おさかなチャットV2.0</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #000; }
@@ -162,7 +165,7 @@
       // YouTubeの埋め込み
       const youtubeRegex = /https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/;
       const youtubeMatch = msg.match(youtubeRegex);
-      let msgWithLinks = msg.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+      let msgWithLinks = msg;
       
       li.innerHTML = msgWithLinks;
 
